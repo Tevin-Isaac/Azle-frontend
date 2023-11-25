@@ -1,8 +1,13 @@
 {
   "canisters": {
     "hello_world2_backend": {
-      "main": "src/hello_world2_backend/main.mo",
-      "type": "motoko"
+      "main": "src/hello_world2_backend/index.ts",
+      "type": "custom",
+      "build": "npx src/hello_world2",
+      "root": "src",
+      "ts": "src/index.ts",
+      "candid": "src/index.did",
+      "wasm": ".azle/hello_world2/hello_world2.wasm.gz"
     },
     "hello_world2_frontend": {
       "dependencies": [
