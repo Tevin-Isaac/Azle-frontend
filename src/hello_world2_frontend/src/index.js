@@ -1,19 +1,24 @@
-import { hello_world2_backend } from "../../declarations/hello_world2_backend";
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { initializeContract } from "./utils/icp";
+import AssistantProvider from "./context/assistantProvider";
+import UserProvider from "./context/userProvider";
 
-document.querySelector("form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const button = e.target.querySelector("button");
+window.renderICPromise = initializeContract()
+  .then(() => {
+    ReactDOM.render(
+      <React.StrictMode>
+        <AssistantProvider>
+          <UserProvider>
+            <App />
+          </UserProvider>
+        </AssistantProvider>
+      </React.StrictMode>,
+      document.getElementById("root")
+    );
+  })
+  .catch(console.error);
 
-  const name = document.getElementById("name").value.toString();
-
-  button.setAttribute("disabled", true);
-
-  // Interact with foo actor, calling the greet method
-  const greeting = await hello_world2_backend.greet(name);
-
-  button.removeAttribute("disabled");
-
-  document.getElementById("greeting").innerText = greeting;
-
-  return false;
-});
+reportWebVitals();
